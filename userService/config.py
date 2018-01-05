@@ -2,6 +2,9 @@ class BaseConfig:
     """Base configuration"""
     DEBUG = False
     TESTING = False
+    JSON_AS_ASCII = False
+    #JSONIFY_MIMETYPE = True
+    SECRET_KEY = 'My Precious'
     MONGO_HOST = 'localhost'
     MONGO_PORT = 27017
 
