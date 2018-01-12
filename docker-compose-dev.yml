@@ -1,0 +1,22 @@
+version: '2.0'
+
+services:
+
+  users-service:
+    container_name: user-service
+    build:
+      context: ./userService
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './userService:/usr/src/app'
+    ports:
+      - 5001:5000
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+  mongodb:
+    container_name: userservice-mongo
+    image: mongo
+    ports:
+      - "27017:27017"
