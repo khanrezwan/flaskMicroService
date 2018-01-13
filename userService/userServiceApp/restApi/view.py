@@ -1,7 +1,7 @@
 from  flask import current_app as app
 from flask import jsonify, request
 from userServiceApp import userMicroService
-from init_flask_app import pyMongo
+from init_flask_app import pyMongo, consul
 
 
 
@@ -9,10 +9,15 @@ from init_flask_app import pyMongo
 def ping():
 
     pyMongo.db.tasks.insert_one({'dd':1})
-    return jsonify({
-        'status': 'success',
-        'message': 'pong!'
-    })
+    # return jsonify({
+    #     'status': 'success',
+    #     'message': 'pong!'
+    # })
+    #return jsonify(consul.session.catalog.nodes())
+    #return jsonify(consul.session.health.checks('userservice-app'))
+    #return jsonify(consul.session.status.leader())
+    #return jsonify(consul.session.kv.values())
+    return jsonify(consul.session.agent.services())
 
 @userMicroService.route("/", methods=['POST'])
 def ping1():
