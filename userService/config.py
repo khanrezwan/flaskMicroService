@@ -59,7 +59,7 @@ config = {
     'development': DevelopmentConfig,
     'developmentDocker': DevConfigDocker,
     'testing': TestingConfig,
-    'testingDocker':TestingConfigDocker,
+    'testingDocker': TestingConfigDocker,
     'production': ProductionConfig,
     'productionDocker':ProductionConfigDocker,
     'default': DevConfigDocker

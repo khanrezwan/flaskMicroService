@@ -15,6 +15,10 @@ services:
       - mongodb
     links:
       - mongodb
+    environment:
+      - APP_SETTINGS=developmentDocker
+      - CONSUL_HOST=172.17.0.1
+      - CONSUL_PORT=8500
   mongodb:
     container_name: userservice-mongo
     image: mongo
