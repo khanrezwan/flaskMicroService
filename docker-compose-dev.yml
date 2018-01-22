@@ -8,19 +8,52 @@ services:
       context: ./userService
       dockerfile: Dockerfile-dev
     volumes:
-      - './userService:/usr/src/app'
+      - './userService:/usr/local/app'
+    networks:
+            testing_net:
+                ipv4_address: 172.28.1.1
     ports:
-      - 5001:5000
+      - 5000:5000
     depends_on:
+      - consul
       - mongodb
     links:
       - mongodb
+      - consul
     environment:
+      - USER_SERVICE_IP=172.28.1.1
+      - USER_SERVICE_PORT=5000
       - APP_SETTINGS=developmentDocker
-      - CONSUL_HOST=172.17.0.1
+      - CONSUL_HOST=172.28.1.3
       - CONSUL_PORT=8500
   mongodb:
     container_name: userservice-mongo
     image: mongo
+    networks:
+            testing_net:
+                ipv4_address: 172.28.1.2
     ports:
       - "27017:27017"
+  
+  consul:
+    container_name: userservice_consul
+    image: consul
+    networks:
+            testing_net:
+                ipv4_address: 172.28.1.3
+    #command: agent -server -bind 0.0.0.0 -client 0.0.0.0 -bootstrap-expect=1
+    #envioronment: - 
+    ports:
+      - 8300:8300
+      - 8301:8301
+      - 8301:8301/udp
+      - 8302:8302
+      - 8302:8302/udp
+      - 8400:8400
+      - 8500:8500
+networks:
+    testing_net:
+        ipam:
+            driver: default
+            config:
+              - subnet: 172.28.0.0/16

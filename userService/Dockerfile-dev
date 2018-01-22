@@ -1,17 +1,17 @@
 FROM python:3.6.3
 
 # set working directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /usr/local/app
+WORKDIR /usr/local/app
 
 # add requirements
-ADD ./requirement.txt /usr/src/app/requirement.txt
+ADD ./requirement.txt /usr/local/app/requirement.txt
 
 # install requirements
 RUN pip install -r requirement.txt
 
 # add app
-ADD . /usr/src/app
+ADD . /usr/local/app
 
 # run server
 CMD python manage.py runserver -h 0.0.0.0

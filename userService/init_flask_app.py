@@ -3,6 +3,7 @@ from flask_pymongo import PyMongo
 from flask_restful import Api
 from config import config
 from flask_consulate import Consul
+import os
 
 
 pyMongo = PyMongo()
@@ -25,9 +26,9 @@ def createApp(config_name, config_prefix_name):
     consul.register_service(
         name='userservice-app',
         interval='10s',
-        tags=['userservice', ],
-        port=5001,
-        httpcheck='http://172.17.0.1:5001/healthcheck'
+        tags=['userservice'],
+        port=5000,
+        httpcheck='http://'+os.getenv('USER_SERVICE_IP')+':'+os.getenv('USER_SERVICE_PORT')+'/healthcheck'
     )
     return app
 

@@ -1,3 +1,6 @@
+import os
+
+
 class BaseConfig:
     """Base configuration"""
     DEBUG = False
@@ -5,6 +8,7 @@ class BaseConfig:
     JSON_AS_ASCII = False
     #JSONIFY_MIMETYPE = True
     SECRET_KEY = 'My Precious'
+    CONSUL_HOST = os.getenv('CONSUL_HOST')
     #MONGO_URI = 'mongodb://localhost:27017/userService'
     @staticmethod
     def init_app(app):
@@ -16,6 +20,8 @@ class DevConfigDocker(BaseConfig):
     MONGO_PORT = 27017
     DEBUG = True
     MONGO_DBNAME = 'userServiceDev'
+    CONSUL_HOST = os.getenv('CONSUL_HOST')
+    print(CONSUL_HOST)
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
